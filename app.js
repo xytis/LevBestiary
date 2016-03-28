@@ -62,13 +62,6 @@ app.use(session({secret: "LabaiLabaiIlgaIrPaslaptingaFraze",
 app.use(express.static(path.join(__dirname, "public")));
 
 //ROUTING
-
-// app.use(function(req,res, next){ //set .lastPage for every request
-//   //req.session.lastPage = req.originalUrl;
-//   console.log("last page is: " + req.session.lastPage + " Status: " + req.statusCode);
-//   next();
-// })
-
 app.use("/nav", content.router);
 app.use("/account", account.router);
 

@@ -171,7 +171,7 @@ function validateEntry(obj, acc){
       DR:         obj.Dr,
     },
     //Attacks:    [String],
-    Traits:     obj.traits.trim().split(","),
+    Traits:     obj.traits.trim().split(";"),
     //Skills:     [String],
     // Notes:      [String],
      url:        '/' + acc.name + '/' + obj.title.trim().replace(/\s/g, ""),
