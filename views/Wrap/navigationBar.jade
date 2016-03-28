@@ -1,0 +1,22 @@
+mixin listref(url, name)
+  li
+    a(href="/nav" + url)= name
+
+div 
+ul
+  mixin listref("/main", "Welcome")
+  li Shroom Monsters
+    ul
+      mixin listref("/theShroomCarrier", "The Shroom Carrier")
+      mixin listref("/shroomling", "Shroomling")
+  li Hive Mind 
+    ul   
+      mixin listref("/nahra", "Nah'ra")
+      mixin listref("/nahma", "Nah'ma")
+      mixin listref("/nahka", "Nah'ka")
+  li Shapeless
+    ul
+      mixin listref("/shapeless", "Shapeless")
+  li Deities
+    ul
+      mixin listref("/endlessWastness", "Endless Wastness")

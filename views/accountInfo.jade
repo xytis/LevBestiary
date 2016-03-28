@@ -1,0 +1,33 @@
+- var mUser = inpUser
+- var content = iCont
+- var entries= iEntries
+
+html
+  head
+    link(rel="stylesheet", type="text/css", href="/index_style.css")
+  body
+    div#wrap
+      div#header
+        div.headerTitle Lev Bestiary
+        div.subHeaderTitte 
+          i Bestiary of the Void
+      div#container
+
+        div.nav
+          include ./Wrap/navigationBar.jade
+        div.nav2
+          include ./Wrap/loginArea.jade
+        div#hNav
+          include ./Wrap/hNav.jade
+        div.main
+          case content
+            when "info"
+              include ./includes/accountInfoContent.jade
+            when "create"
+              include ./includes/createAccount.jade
+            when "newEntry"
+              include ./includes/newEntry.jade
+    div#footer
+      p
+        i Made by Kasparas as a training task
+    

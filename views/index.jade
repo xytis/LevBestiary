@@ -1,0 +1,31 @@
+- var mUser = inpUser
+- var content = inContent
+- var template = content.template
+
+html
+  head
+    link(rel="stylesheet", type="text/css", href="/index_style.css")
+  body
+    div#wrap
+      div#header
+        div.headerTitle Lev Bestiary
+        div.subHeaderTitte 
+          i Bestiary of the Void
+      div#container
+
+        div.nav
+          include ./Wrap/navigationBar.jade
+        div.nav2
+          include ./Wrap/loginArea.jade
+        div#hNav
+          include ./Wrap/hNav.jade
+        div.main
+          case template
+            when "main"
+              include ./includes/mainContent.jade
+            default
+              include ./includes/content.jade
+    div#footer
+      p
+        i Made by Kasparas as a training task
+    

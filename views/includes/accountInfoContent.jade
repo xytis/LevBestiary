@@ -1,0 +1,36 @@
+h1 Your Account
+div= "Hello " + mUser.name + ":"
+div.AccF Change Your password 
+  form(action= "/account/yourAccount/ChangePass" method="post")
+    div Choose new password
+    input(type="password", name="password")
+    div Repeat new password
+    input(type="password", name="password_r")
+    div.submitWrapper
+      input(type="submit", value="Change Password")
+div= "Your current Email is " + mUser.email
+  form(action= "/account/yourAccount/ChangeEmail" method="post")
+    div.AccF
+      div Change your email address:
+      input(type="text", name="email")
+      div Please repeat:
+      input(type="text", name="email_r")
+      div.submitWrapper
+        input(type="submit", value="Change Email")
+        
+-if(typeof(entries) !== 'undefined' && entries.length != 0)
+  h1 Here you can review your entries
+  table#charTable
+    tbody
+      each val, index in entries.length ? entries : ['empty array']
+        tr
+          td
+            a(href= val.url)=  val.title
+          td
+            form(id= "form" + index, action= val.url, method="post")
+              input(type="hidden", name="_method", value= "delete") 
+              a(onclick="document.getElementById('" + "form" + index + "').submit()") 
+                u delete
+            
+            
+               

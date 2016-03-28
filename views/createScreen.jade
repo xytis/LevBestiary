@@ -1,0 +1,25 @@
+- var mUser = inpUser
+- var content = inContent
+
+html
+  head
+    link(rel="stylesheet", type="text/css", href="index_style.css")
+  body
+    div#wrap
+      div#header
+        div.headerTitle The awesome title in awesome font
+      div#container
+        div.nav
+          include ./Wrap/navigationBar.jade
+        div.nav2
+          include ./Wrap/loginArea.jade
+        div.main
+          form(action="postEntry")
+            div Log in
+            input(type="text", name="login")
+            div Password
+            input(type="text", name="password")
+            input(type="submit", value="Login")
+    div#footer
+      p
+        i some awesome footer text

@@ -1,0 +1,23 @@
+{
+  "name": "thirdnodeapp",
+  "version": "0.0.2",
+  "description": "My express training app",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Kasparas",
+  "license": "ISC",
+  "dependencies": {
+    "express": "*",
+    "jade": "*",
+    "mongodb": "*",
+    "express-session": "*",
+    "cookie-parser": "*",
+    "connect-mongodb-session" : "*",
+    "mongoose": "*",
+    "serve-favicon": "*",
+    "body-parser": "*",
+    "bluebird": "*"
+  }
+}

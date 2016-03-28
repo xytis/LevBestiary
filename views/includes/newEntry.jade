@@ -1,0 +1,72 @@
+h1 New Entry
+div Here You can add new entry to the catalog
+  form(action= "/nav/addEntry" method="post")
+    div.inputWrap
+      div Title:
+      input(type="text", name="title")
+    div.inputWrap
+      div Class:
+      div.comment The category the monster belongs to
+      input(type="text", name="class")
+    div.inputWrap
+      div Description:
+      input(type="text", name="description")
+    div.inputWrap Table
+      table#charTable
+        tbody
+          tr
+            td ST
+            td  
+              input(type="text", name="ST")
+            td HP
+            td  
+              input(type="text", name="HP")
+            td Speed
+            td  
+              input(type="text", name="Speed")
+          tr
+            td DX
+            td  
+              input(type="text", name="DX")
+            td Will
+            td  
+              input(type="text", name="Will")
+            td Move
+            td  
+              input(type="text", name="Move")
+          tr
+            td IQ
+            td
+              input(type="text", name="IQ")
+            td Per
+            td
+              input(type="text", name="Per")
+            td SM
+            td
+              input(type="text", name="SM")
+          tr
+            td HT
+            td
+              input(type="text", name="HT")
+            td FP
+            td
+              input(type="text", name="FP")
+            td Pr
+            td
+              input(type="text", name="Pr")
+          tr
+            td Dodge
+            td
+              input(type="text", name="Dodge")
+            td Parry
+            td
+              input(type="text", name="Parry")
+            td Dr
+            td
+              input(type="text", name="Dr")
+    div.inputWrap
+      div Traits
+      input(type="text", name="traits")
+    div.inputWrap
+      input(type="submit", value="Submit")
+    

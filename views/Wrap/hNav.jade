@@ -1,0 +1,15 @@
+- var logedin = loged_input
+table
+  tbody
+    tr
+      td 
+        a(href="/nav/main") Main Section
+      if logedin
+        td 
+          a(href="/nav/yourAccount") Your Account
+      if !logedin
+        td 
+          a(href="/nav/createAccount") Create account
+      if logedin
+        td
+          a(href="/nav/newEntry") New Entry

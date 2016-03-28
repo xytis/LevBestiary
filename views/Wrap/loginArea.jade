@@ -1,0 +1,23 @@
+- var logedin = loged_input
+  if logedin
+    div= "welcome " + mUser.name
+    form(action="/account/logout")
+      input(type="submit", value="Logout")
+  else
+    form(action="/account/login" method = "post")
+      div Log in
+      input(type="text", name="login")
+      div Password
+      input(type="password", name="password")
+      input(type="submit", value="Login")
+   //
+    div
+      form(action="/account/createAccount" method = "post")
+        div Create Account
+        div Name
+        input(type="text", name="login")
+        div Password
+        input(type="text", name="password")
+        div Repeat password
+        input(type="text", name="password_r")
+        input(type="submit", value="Create Account")
