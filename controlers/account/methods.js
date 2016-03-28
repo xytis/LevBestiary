@@ -15,7 +15,6 @@ module.exports.create = function(req,res){
         throw new CustomError("Email already in use");
       }
       if(validatePassword(body.password, body.password_r) && validateEmail(body.email, body.email_r)){
-        console.log("aa")
         var account = new Account({"name": body.login, "password": body.password, "sessionId": req.sessionID, "email": body.email});
         return account.save();
       }else{
@@ -25,9 +24,9 @@ module.exports.create = function(req,res){
     .catch(function(err){
       console.log(err);
     })
-    .finally(function(){
-      res.redirect(302, req.session.lastPage);
-    });
+    .finally(function() {
+      res.redirect(302, "/nav/main");
+    })
 }
 
 
@@ -40,9 +39,9 @@ module.exports.logout = function(req,res){
     .catch(function(err){
       console.log(err);
     })
-    .finally(function(){
+    .finally(function() {
       res.redirect(302, req.session.lastPage);
-    });
+    })
 };
 
 module.exports.login = function(req,res){
@@ -76,10 +75,8 @@ module.exports.changePass = function(req,res){
     })
     .catch(function(err){
       console.log(err);
-    })
-    .finally(function(){
       res.redirect(302, req.session.lastPage);
-    });
+    })
 }
 
 
@@ -96,10 +93,8 @@ module.exports.changeEmail = function(req,res){
     })
     .catch(function(err){
       console.log(err);
-    })
-    .finally(function(){
       res.redirect(302, req.session.lastPage);
-    });
+    })
 }
 
 module.exports.update = function(req,res){

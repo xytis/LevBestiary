@@ -11,19 +11,19 @@ module.exports.create = function(req,res){
     .then(function(acc){
       var validated_data = validateEntry(req.body, acc);
       var content = new Content(validated_data);
-      return [acc, content.save()];
+      content.save();
+      return [acc, content];
     })
-    .then(function(item){
-      var entries = item[0].entries;
-      entries.push(item[1]._id);
-      item[0].update({"entries": entries}).exec();
+    .then(function(result){
+      var entries = result[0].entries;
+      entries.push(result[1]._id);
+      result[0].update({"entries": entries}).exec();
+      res.redirect(302, req.session.lastPage);
     })
     .catch(function(err){
       console.log(err);
-    })
-    .finally(function(){
       res.redirect(302, req.session.lastPage);
-    });
+    })
 }
 
 
@@ -78,17 +78,16 @@ module.exports.yourAccountPage = function(req,res){
   var url = req.path;
   Account.findOne({"sessionId": req.sessionID})
     .then(function(acc){
-      return [acc, getEntryList(acc.entries)];
+      var entries = getEntryList(acc.entries);
+      return Promise.all([acc, entries]);
     })
     .then(function(result){
       res.render("accountInfo.jade",{loged_input: true, iCont: "info", inpUser:{name: result[0].name, email: result[0].email}, iEntries: result[1]});
     })
     .catch(function(err){
       console.log(err);
-    })
-    .finally(function(){
       res.redirect(302, req.session.lastPage);
-    });
+    })
 }
 
 module.exports.createAccountPage = function(req,res){
@@ -99,22 +98,21 @@ module.exports.createAccountPage = function(req,res){
     })
     .catch(function(err){
       console.log(err);
-    })
-    .finally(function(){
       res.redirect(302, req.session.lastPage);
-    });
+    })
 }
 
 module.exports.newEntry = function(req,res){
   var url = req.path;
   req.session.lastPage = req.originalUrl;
-  Account.findOne({"sessionId": req.sessionID}).then(function(acc){
-    if(acc){
-      res.render("accountInfo.jade",{loged_input: true, iCont: "newEntry", inpUser:{name: acc.name}});
-    }else{
-      res.redirect(302,"/nav/main")
-    }
-  })
+  Account.findOne({"sessionId": req.sessionID})
+    .then(function(acc){
+      if(acc){
+        res.render("accountInfo.jade",{loged_input: true, iCont: "newEntry", inpUser:{name: acc.name}});
+      }else{
+        res.redirect(302,"/nav/main")
+      }
+    })
 }
 
 module.exports.update = function(req,res){
@@ -130,9 +128,9 @@ module.exports.delete = function(req,res){
   Promise.all([acc, con])
     .then(function(result){
       //result[0] === acc result[1] === content
-      if(method === "delete" && result[0]._id === result[1].creator){
+      if(method === "delete" && result[0]._id == result[1].creator){
         var arr = result[0].entries;
-        var toRemove = arr.splice(arr.indexOf(item._id),1);
+        var toRemove = arr.splice(arr.indexOf(result[1]._id),1);
         return Promise.all([
           result[0].update({entries: arr}),
           result[1].remove()
@@ -144,33 +142,33 @@ module.exports.delete = function(req,res){
     .catch(function(err){
       console.log(err);
     })
-    .finally(function(){
-      res.redirect(302, req.session.lastPage);
-    });
+    .finally(function() {
+      res.redirect(302, "/nav/yourAccount");
+    })
 }
 
 
 function validateEntry(obj, acc){
   var valObj = {
-    title:      obj.title.trim(),
-    class:      obj.class.trim(),
-    text:       obj.describtion.trim(),
+    title:      obj.title,
+    class:      obj.class,
+    text:       obj.describtion,
     AttributeTable: {
-      ST:         obj.ST.trim(),
-      HP:         obj.HP.trim(),
-      Speed:      obj.Speed.trim(),
-      DX:         obj.DX.trim(),
-      Will:       obj.Will.trim(),
-      Move:       obj.Move.trim(),
-      IQ:         obj.IQ.trim(),
-      Per:        obj.Per.trim(),
-      SM:         obj.SM.trim(),
-      HT:         obj.HT.trim(),
-      FP:         obj.FP.trim(),
-      Pr:         obj.Pr.trim(),
-      Dodge:      obj.Dodge.trim(),
-      Parry:      obj.Parry.trim(),
-      DR:         obj.Dr.trim(),
+      ST:         obj.ST,
+      HP:         obj.HP,
+      Speed:      obj.Speed,
+      DX:         obj.DX,
+      Will:       obj.Will,
+      Move:       obj.Move,
+      IQ:         obj.IQ,
+      Per:        obj.Per,
+      SM:         obj.SM,
+      HT:         obj.HT,
+      FP:         obj.FP,
+      Pr:         obj.Pr,
+      Dodge:      obj.Dodge,
+      Parry:      obj.Parry,
+      DR:         obj.Dr,
     },
     //Attacks:    [String],
     Traits:     obj.traits.trim().split(","),
@@ -210,7 +208,7 @@ function getEntryList(entries){
 function CustomError(message) {
   this.name = 'CustomError';
   this.message = message || 'Error text thrown by custom error';
-  this.stack = (new Error()).stack;
+  // this.stack = (new Error()).stack;
 }
 CustomError.prototype = Object.create(Error.prototype);
 CustomError.prototype.constructor = CustomError;
