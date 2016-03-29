@@ -1,0 +1,151 @@
+* { padding: 0; margin: 0; }
+
+body {
+ font-family: Arial, Helvetica, sans-serif;
+ font-size: 13px;
+}
+#wrapper {
+ margin: 0 auto;
+ width: 922px;
+}
+#header {
+ color: #333;
+ width: 900px;
+ float: left;
+ padding: 10px;
+ border: 1px solid #ccc;
+ height: 100px;
+ margin: 10px 0px 5px 0px;
+ background:#ffdd99;
+}
+#navigation {
+ float: left;
+ width: 900px;
+ color: #333;
+ padding: 10px;
+ border: 1px solid #ccc;
+ margin: 0px 0px 5px 0px;
+ background-color:#ffeb99;
+}
+#leftcolumn {
+ color: #333;
+ border: 1px solid #ccc;
+ background:#ffeb99;
+ margin: 0px 5px 5px 0px;
+ padding: 10px;
+ height: 500px;
+ width: 195px;
+ float: left;
+}
+#rightcolumn {
+ float: right;
+ color: #333;
+ border: 1px solid #ccc;
+ background:#fff0b3;
+ margin: 0px 0px 5px 0px;
+ padding: 10px;
+ height: 500px;
+ width: 678px;
+ display: inline;
+}
+#footer {
+ width: 900px;
+ clear: both;
+ color: #333;
+ border: 1px solid #ccc;
+ background-color:#ffeb99;
+ margin: 0px 0px 10px 0px;
+ padding: 10px;
+}
+
+ul{
+  padding: 5px 10px;
+}
+
+#LoginWrapper{
+}
+
+#LoginWrapper form{
+    padding: 5px 10px;
+}
+
+.inputWrapper{
+  padding: 5px;
+}
+
+
+
+/* ---------------------- Dolphin nav ---------------------- */
+#dolphincontainer{
+	position:relative;
+	height:56px;
+	color:#E0E0E0;
+	background:#143D55;
+	width:100%;
+	font-family:Helvetica,Arial,Verdana,sans-serif;
+	}
+
+#dolphinnav{
+	position:relative;
+	height:33px;
+	font-size:12px;
+	text-transform:uppercase;
+	font-weight:bold;
+	background:#fff url(dolphin_bg.gif) repeat-x bottom left;
+	padding:0 0 0 20px;
+	}
+
+#dolphinnav ul{
+	margin:0;
+	padding:0;
+	list-style-type:none;
+	width:auto;
+	float:left;
+	}
+
+#dolphinnav ul li{
+	display:block;
+	float:left;
+	margin:0 1px;
+	}
+
+#dolphinnav ul li a{
+	display:block;
+	float:left;
+	color:#EAF3F8;
+	text-decoration:none;
+	padding:0 0 0 20px;
+	height:33px;
+	}
+
+#dolphinnav ul li a span{
+	padding:12px 20px 0 0;
+	height:21px;
+	float:left;
+	}
+
+#dolphinnav ul li a:hover{
+	color:#fff;
+	background:transparent url(dolphin_bg-OVER.gif) repeat-x bottom left;
+	}
+
+#dolphinnav ul li a:hover span{
+	display:block;
+	width:auto;
+	cursor:pointer;
+	}
+
+#dolphinnav ul li a.current,#dolphinnav ul li a.current:hover{
+	color:#fff;
+	background:#1D6893 url(dolphin_left-ON.gif) no-repeat top left;
+	line-height:275%;
+	}
+
+#dolphinnav ul li a.current span{
+	display:block;
+	padding:0 20px 0 0;
+	width:auto;
+	background:#1D6893 url(dolphin_right-ON.gif) no-repeat top right;
+	height:33px;
+	}
+/* ---------------------- END Dolphin nav ---------------------- */

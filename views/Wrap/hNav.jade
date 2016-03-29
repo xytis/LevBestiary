@@ -1,15 +1,19 @@
-- var logedin = loged_input
-table
-  tbody
-    tr
-      td 
-        a(href="/nav/main") Main Section
+- var logedin = loged_input          
+#dolphincontainer
+  #dolphinnav
+    ul
+      li
+        a(href="/nav/main")
+          span Main Section
       if logedin
-        td 
-          a(href="/nav/yourAccount") Your Account
+        li
+          a(href="/nav/yourAccount")
+            span Your Account
       if !logedin
-        td 
-          a(href="/nav/createAccount") Create account
+        li
+          a(href="/nav/createAccount")
+            span Create account
       if logedin
-        td
-          a(href="/nav/newEntry") New Entry
+        li
+          a(href="/nav/newEntry")
+            span New Entry
