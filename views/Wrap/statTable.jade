@@ -1,23 +1,28 @@
+mixin tableEntry(stat, val)
+  td.stat= stat + ": "
+  td.val= val
+
+
 table#AttributeTable
   thead
   tbody
     tr
-      td= "ST: : " + content.AttributeTable.ST
-      td= "HP: " + content.AttributeTable.HP
-      td= "Speed: " + content.AttributeTable.Speed
+      mixin tableEntry("ST", content.AttributeTable.ST)
+      mixin tableEntry("HP", content.AttributeTable.HP)
+      mixin tableEntry("Speed", content.AttributeTable.Speed)
     tr
-      td= "DX: " + content.AttributeTable.DX
-      td= "Will: " + content.AttributeTable.Will
-      td= "Move: " + content.AttributeTable.Move
+      mixin tableEntry("DX", content.AttributeTable.DX)
+      mixin tableEntry("Will", content.AttributeTable.Will)
+      mixin tableEntry("Move", content.AttributeTable.Move)
     tr
-      td= "IQ: " + content.AttributeTable.IQ
-      td= "Per: " + content.AttributeTable.Per
-      td= "SM: " + content.AttributeTable.SM
+      mixin tableEntry("IQ", content.AttributeTable.IQ)
+      mixin tableEntry("Per", content.AttributeTable.Per)
+      mixin tableEntry("SM", content.AttributeTable.SM)
     tr
-      td= "HT: " + content.AttributeTable.HT
-      td= "FP: " + content.AttributeTable.FP
-      td= "Pr: " + content.AttributeTable.Pr
+      mixin tableEntry("HT", content.AttributeTable.HT)
+      mixin tableEntry("FP", content.AttributeTable.FP)
+      mixin tableEntry("Pr", content.AttributeTable.Pr)
     tr
-      td= "Dodge: " + content.AttributeTable.Dodge
-      td= "Parry: " + content.AttributeTable.Parry
-      td= "DR: " + content.AttributeTable.DR
+      mixin tableEntry("Dodge", content.AttributeTable.Dodge)
+      mixin tableEntry("Parry", content.AttributeTable.Parry)
+      mixin tableEntry("DR", content.AttributeTable.DR)
