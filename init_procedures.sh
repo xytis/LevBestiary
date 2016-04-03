@@ -1,6 +1,7 @@
 echo start mongod
 
 echo start robomongo
+robomongo &
 
 echo start atom
 atom

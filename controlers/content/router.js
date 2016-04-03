@@ -16,7 +16,9 @@ router.post("/:acc/:entry",    methods.delete);
 router.get("/yourAccount",   methods.yourAccountPage);
 router.get("/createAccount",   methods.createAccountPage);
 router.get("/newEntry",   methods.newEntry);
+router.get("/Browse",   methods.browseScreen);
 
+router.get("/Category/:category",   methods.displayCategory);
 router.get("/:acc/:content",   methods.readA);
 router.get("/:content",   methods.read);
 

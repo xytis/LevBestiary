@@ -1,0 +1,13 @@
+- var entries = inEntries
+
+mixin entryL(name, url)
+  li
+    a(href="/nav" + url)= name
+
+h1= inCategory
+div#categoriesWrapper
+  ul
+    each val in entries
+      mixin entryL(val.title, val.url)
+
+    

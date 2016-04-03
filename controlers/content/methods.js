@@ -94,7 +94,11 @@ module.exports.createAccountPage = function(req,res){
   var url = req.path;
   Account.findOne({"sessionId": req.sessionID})
     .then(function(acc){
-      return res.render("accountInfo.jade",{loged_input: false, iCont: "create"});
+      if(!acc){
+        return res.render("accountInfo.jade",{loged_input: false, iCont: "create"});
+      }else{
+        throw "Already logged in.";
+      }
     })
     .catch(function(err){
       console.log(err);
@@ -147,6 +151,52 @@ module.exports.delete = function(req,res){
     })
 }
 
+module.exports.browseScreen = function(req,res){
+  var categories = ["Shroom Monsters", "Hive Mind", "Shapeless", "Deities", "Goblin", "Beast", "Humman", "Elf", "Demon", "Celestial", "Insect"];
+  req.session.lastPage = req.originalUrl;
+  Account.findOne({"sessionId": req.sessionID})
+    .then(function(acc){
+      if(acc){
+        res.render("browse.jade",{loged_input: true, inCategories: categories});
+      }else{
+        res.render("browse.jade",{loged_input: false, inCategories: categories});
+      }
+    })
+    .catch(function(err){
+      console.log(err);
+      res.redirect(302, "/nav/main")
+    })
+
+}
+
+module.exports.displayCategory = function(req,res){
+  req.session.lastPage = req.originalUrl;
+  var category = req.params.category;
+  var acc = Account.findOne({"sessionId": req.sessionID});
+  var conts = Content.find({class: category}).select("url title -_id");
+
+  Promise.all([acc, conts])
+    .then(function(result){
+      if(result[0]){
+        var loged = true;
+      }else{
+        var loged = false;
+      }
+      var entries = [];
+      for(var ii = 0; ii<result[1].length; ii++){
+        entries.push({title: result[1][ii].title, url: result[1][ii].url})
+      }
+      res.render("category.jade",{loged_input: loged, inEntries: entries, inCategory: category});
+
+    })
+    .catch(function(err){
+      console.log(err);
+      res.redirect(302, "/nav/main")
+    })
+
+}
+
+//PRIVATE FUNCTIONS
 
 function validateEntry(obj, acc){
   var valObj = {

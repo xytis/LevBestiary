@@ -1,0 +1,13 @@
+- var Categories = inCategories
+
+mixin categoryM(name)
+  li
+    a(href="/nav/Category/" + name)= name
+
+h1 Browse Categories
+div#categoriesWrapper
+  ul
+    each val in Categories
+      mixin categoryM(val)
+
+    

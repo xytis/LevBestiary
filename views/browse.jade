@@ -1,7 +1,3 @@
-- var mUser = inpUser
-- var content = inContent
-- var template = content.template
-
 html
   head
     link(rel="stylesheet", type="text/css", href="/styles.css")
@@ -15,11 +11,7 @@ html
         div#leftcolumn
           include ./Wrap/navigationBar.jade
         div#rightcolumn
-          case template
-            when "main"
-              include ./includes/mainContent.jade
-            default
-              include ./includes/content.jade
+          include ./includes/browseContent.jade
       div#footer
         p
           i Made by Kasparas as a training task
