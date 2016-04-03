@@ -11,7 +11,7 @@ var router = express.Router({
 
 router.post("/addEntry",    methods.create);
 
-router.post("/:acc/:entry",    methods.delete);
+router.post("/:acc/:entry",    methods.accoutPageOp);
 
 router.get("/yourAccount",   methods.yourAccountPage);
 router.get("/createAccount",   methods.createAccountPage);
@@ -25,6 +25,6 @@ router.get("/:content",   methods.read);
 
 
 router.put("/",     methods.update);
-router.delete("/",  methods.delete);
+//router.delete("/",  methods.delete);
 
 module.exports.router = router;

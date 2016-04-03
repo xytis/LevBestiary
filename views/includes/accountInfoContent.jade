@@ -29,11 +29,24 @@ div= "Your current Email is " + mUser.email
             div.entryL
               a(href= val.url)=  val.title
           td
-            div.deleteL
-              form(id= "form" + index, action= val.url, method="post")
-                input(type="hidden", name="_method", value= "delete") 
-                a(onclick="document.getElementById('" + "form" + index + "').submit()") 
-                  span Delete
+            if val.public
+              div.publicL
+                form(id= "formP" + index, action= val.url, method="post")
+                  input(type="hidden", name="_method", value= "makePrivate") 
+                  a(onclick="document.getElementById('" + "formP" + index + "').submit()") 
+                    span Make Private
+            else
+              div.publicL
+                form(id= "formP" + index, action= val.url, method="post")
+                  input(type="hidden", name="_method", value= "makePublic") 
+                  a(onclick="document.getElementById('" + "formP" + index + "').submit()") 
+                    span Make Public
+            td
+              div.deleteL
+                form(id= "formD" + index, action= val.url, method="post")
+                  input(type="hidden", name="_method", value= "delete") 
+                  a(onclick="document.getElementById('" + "formD" + index + "').submit()") 
+                    span Delete
             
             
                

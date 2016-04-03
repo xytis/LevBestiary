@@ -100,7 +100,6 @@ module.exports.readA = function(req,res){
 
 
 module.exports.yourAccountPage = function(req,res){
-  var url = req.path;
   Account.findOne({"sessionId": req.sessionID})
     .then(function(acc){
       var entries = getEntryList(acc.entries);
@@ -148,11 +147,52 @@ module.exports.update = function(req,res){
 }
 
 
-module.exports.delete = function(req,res){
+module.exports.accoutPageOp = function(req, res){
+  var method = req.body._method;
+
+  switch (method){
+    case "delete":
+      deleteA(req,res);
+      break;
+    case "makePublic":
+      toglePublic(req,res);
+      break;
+    case "makePrivate":
+      toglePublic(req,res);
+      break;
+  }
+}
+
+function toglePublic(req,res){
+  var currentState = req.body._method;
+  var acc = Account.findOne({"sessionId": req.sessionID});
+  var con = Content.findOneByURL(req.path);
+  Promise.all([acc, con])
+    .then(function(result){
+      //result[0] === acc result[1] === content
+      if(result[0]._id == result[1].creator){
+        if(result[1].public){
+          result[1].update({public: false}).exec();
+        }else{
+          result[1].update({public: true}).exec();
+        }
+      }else{
+        throw new CustomError("Failed to delete due to restrictions: user does not own entry");
+      }
+    })
+    .catch(function(err){
+      console.log(err);
+    })
+    .finally(function() {
+      res.redirect(302, "/nav/yourAccount");
+    })
+}
+
+
+function deleteA(req,res){
   var method = req.body._method;
   var acc = Account.findOne({"sessionId": req.sessionID});
   var con = Content.findOneByURL(req.path);
-
   Promise.all([acc, con])
     .then(function(result){
       //result[0] === acc result[1] === content
@@ -197,7 +237,7 @@ module.exports.displayCategory = function(req,res){
   req.session.lastPage = req.originalUrl;
   var category = req.params.category;
   var acc = Account.findOne({"sessionId": req.sessionID});
-  var conts = Content.find({class: category}).select("url publicUrl title -_id");
+  var conts = Content.find({class: category}).select("url publicUrl title -_id").where("public").equals(true);
 
   Promise.all([acc, conts])
     .then(function(result){
@@ -259,7 +299,7 @@ function validateEntry(obj, acc){
     // tags:       [String],
     // template: String,
     creator:  acc._id,
-    public:   acc.name === "admin" ? true : false
+    public:   false,
   }
   return valObj;
 }
@@ -274,7 +314,7 @@ function getEntryList(entries){
           if(err){
             reject(err);
           }else{
-            entryList.push({"title": item.title, 'url': "/nav" + item.url});
+            entryList.push({title: item.title, url: "/nav" + item.url, public: item.public});
             looper(ii + 1);
           }
         })

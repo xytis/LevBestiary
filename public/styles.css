@@ -114,6 +114,11 @@ ul div{
   width: 140px;
 }
 
+div>a{
+  display:block;
+  width: inherit;
+}
+
 ul div:hover{
   background-color: 00b300;
 }
@@ -144,6 +149,17 @@ div.deleteL:hover{
   background-color: #000000;
 }
 div.deleteL>span{
+  color: #000000;
+}
+
+div.publicL{
+  width: 100px;
+}
+div.publicL:hover{
+  color: #ffffff;
+  background-color: #000000;
+}
+div.publicL>span{
   color: #000000;
 }
 
