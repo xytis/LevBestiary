@@ -2,7 +2,8 @@
 
 mixin entryL(name, url)
   li
-    a(href="/nav" + url)= name
+    div
+      a(href="/nav" + url)= name
 
 h1= inCategory
 div#categoriesWrapper

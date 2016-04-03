@@ -2,11 +2,13 @@
 
 mixin listref(url, name)
   li
-    a(href="/nav" + url)= name
+    div
+      a(href="/nav" + url)= name
     
 div#LoginWrapper
   if logedin
-    div= "welcome " + mUser.name
+    div welcome 
+      b= mUser.name
     form(action="/account/logout")
       input(type="submit", value="Logout")
   else

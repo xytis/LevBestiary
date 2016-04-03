@@ -47,7 +47,7 @@ body {
  background:#ffffff;
  margin: 0px 5px 5px 0px;
  padding: 10px;
- height: 500px;
+ height: 700px;
  width: 195px;
  float: left;
 }
@@ -58,7 +58,7 @@ body {
  background:#ffffff;
  margin: 0px 0px 5px 0px;
  padding: 10px;
- height: 500px;
+ height: 700px;
  width: 678px;
  display: inline;
 }
@@ -103,12 +103,48 @@ a:visited {
 a:hover {
   color: #ffffff;
   text-decoration: none;
-  background-color: 00b300;
 }
 
 a:active {
   color: #00b300;
   text-decoration: none;
+}
+
+ul div{
+  width: 140px;
+}
+
+ul div:hover{
+  background-color: 00b300;
+}
+
+ul div:hover>a{
+  color: #ffffff;
+  text-decoration: none;
+}
+
+/*EntryL*/
+div.entryL{
+  width: 140px;
+}
+div.entryL:hover{
+  background-color: #00b300;
+}
+
+div.entryL:hover>a{
+  color: #ffffff;
+  text-decoration: none;
+}
+/*EntryD*/
+div.deleteL{
+  width: 50px;
+}
+div.deleteL:hover{
+  color: #ffffff;
+  background-color: #000000;
+}
+div.deleteL>span{
+  color: #000000;
 }
 
 /*HNav*/

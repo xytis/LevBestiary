@@ -2,6 +2,9 @@ mixin charEntry(stat)
   td.stat= stat
   td.inp  
     input.col(type="text", name=stat)
+    
+mixin dropDownEntry(name)
+  option(value=name)=name
 
 h1 New Entry
 div Here You can add new entry to the catalog
@@ -12,7 +15,9 @@ div Here You can add new entry to the catalog
     div.inputWrap
       div Class:
       div.comment The category the monster belongs to
-      input.col(type="text", name="class")
+      select(name="class")
+        each val in inCategories
+          mixin dropDownEntry(val)
     div.inputWrap
       div Description:
       input.col(type="text", name="description")
@@ -40,8 +45,17 @@ div Here You can add new entry to the catalog
             mixin charEntry("Parry")
             mixin charEntry("Dr")
     div.inputWrap
+      div Attacks
+      input.col(type="text", name="attacks")
+    div.inputWrap
       div Traits
       input.col(type="text", name="traits")
+    div.inputWrap
+      div Skills
+      input.col(type="text", name="skills")
+    div.inputWrap
+      div Notes
+      input.col(type="text", name="notes")  
     div.inputWrap
       input(type="submit", value="Submit")
     

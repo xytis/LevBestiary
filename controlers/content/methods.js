@@ -3,6 +3,7 @@ var Promise = require("bluebird");
 var home_path = "../../"
 var Content = require(home_path + "models/content.js");
 var Account = require(home_path + "models/account.js");
+var fs = require('fs');
 
 
 module.exports.create = function(req,res){
@@ -28,12 +29,10 @@ module.exports.create = function(req,res){
 
 
 module.exports.read = function(req,res){
-  var url = req.path;
   var acc = Account.findOne({"sessionId": req.sessionID});
   var con = Content.findOneByURL(req.path);
 
   req.session.lastPage = req.originalUrl;
-
   Promise.all([acc, con])
     .then(function(result){
       if(result[1]){
@@ -42,6 +41,32 @@ module.exports.read = function(req,res){
         }else{
           res.render("index.jade",{loged_input: false, inpUser:{name: "name"}, inContent: result[1]});
         }
+      }else{
+        res.status(404).end();
+      }
+    })
+    .catch(function(err){
+      console.log(err)
+      res.status(500).end();
+    })
+}
+
+module.exports.publicRead = function(req,res){
+  var acc = Account.findOne({"sessionId": req.sessionID});
+  var con = Content.findOne({publicUrl: req.url});
+
+  req.session.lastPage = req.originalUrl;
+  Promise.all([acc, con])
+    .then(function(result){
+      if(result[0]){
+        var loged = true;
+        var name = result[0].name;
+      }else{
+        var loged = false;
+        var name = undefined
+      }
+      if(result[1]){
+        res.render("index.jade",{loged_input: loged, inpUser:{name: name}, inContent: result[1]});
       }else{
         res.status(404).end();
       }
@@ -91,7 +116,6 @@ module.exports.yourAccountPage = function(req,res){
 }
 
 module.exports.createAccountPage = function(req,res){
-  var url = req.path;
   Account.findOne({"sessionId": req.sessionID})
     .then(function(acc){
       if(!acc){
@@ -107,12 +131,12 @@ module.exports.createAccountPage = function(req,res){
 }
 
 module.exports.newEntry = function(req,res){
-  var url = req.path;
+  var categories = JSON.parse(fs.readFileSync('public/categories.json', 'utf8')).categories;
   req.session.lastPage = req.originalUrl;
   Account.findOne({"sessionId": req.sessionID})
     .then(function(acc){
       if(acc){
-        res.render("accountInfo.jade",{loged_input: true, iCont: "newEntry", inpUser:{name: acc.name}});
+        res.render("accountInfo.jade",{loged_input: true, iCont: "newEntry", inpUser:{name: acc.name}, inCategories: categories});
       }else{
         res.redirect(302,"/nav/main")
       }
@@ -152,14 +176,14 @@ module.exports.delete = function(req,res){
 }
 
 module.exports.browseScreen = function(req,res){
-  var categories = ["Shroom Monsters", "Hive Mind", "Shapeless", "Deities", "Goblin", "Beast", "Humman", "Elf", "Demon", "Celestial", "Insect"];
+  var categories = JSON.parse(fs.readFileSync('public/categories.json', 'utf8')).categories;
   req.session.lastPage = req.originalUrl;
   Account.findOne({"sessionId": req.sessionID})
     .then(function(acc){
       if(acc){
-        res.render("browse.jade",{loged_input: true, inCategories: categories});
+        res.render("browse.jade",{loged_input: true, inpUser:{name: acc.name}, inCategories: categories});
       }else{
-        res.render("browse.jade",{loged_input: false, inCategories: categories});
+        res.render("browse.jade",{loged_input: false, inpUser: undefined, inCategories: categories});
       }
     })
     .catch(function(err){
@@ -173,20 +197,26 @@ module.exports.displayCategory = function(req,res){
   req.session.lastPage = req.originalUrl;
   var category = req.params.category;
   var acc = Account.findOne({"sessionId": req.sessionID});
-  var conts = Content.find({class: category}).select("url title -_id");
+  var conts = Content.find({class: category}).select("url publicUrl title -_id");
 
   Promise.all([acc, conts])
     .then(function(result){
       if(result[0]){
         var loged = true;
+        var name = result[0].name;
       }else{
         var loged = false;
+        var name = undefined
       }
       var entries = [];
       for(var ii = 0; ii<result[1].length; ii++){
-        entries.push({title: result[1][ii].title, url: result[1][ii].url})
+        if(result[1][ii].publicUrl){
+          entries.push({title: result[1][ii].title, url: result[1][ii].publicUrl})
+        }else{
+          entries.push({title: result[1][ii].title, url: result[1][ii].url})
+        }
       }
-      res.render("category.jade",{loged_input: loged, inEntries: entries, inCategory: category});
+      res.render("category.jade",{loged_input: loged, inpUser:{name: name}, inEntries: entries, inCategory: category});
 
     })
     .catch(function(err){
@@ -202,7 +232,7 @@ function validateEntry(obj, acc){
   var valObj = {
     title:      obj.title,
     class:      obj.class,
-    text:       obj.describtion,
+    text:       obj.description,
     AttributeTable: {
       ST:         obj.ST,
       HP:         obj.HP,
@@ -220,11 +250,12 @@ function validateEntry(obj, acc){
       Parry:      obj.Parry,
       DR:         obj.Dr,
     },
-    //Attacks:    [String],
+    Attacks:    obj.attacks.trim().split(";"),
     Traits:     obj.traits.trim().split(";"),
-    //Skills:     [String],
-    // Notes:      [String],
-     url:        '/' + acc.name + '/' + obj.title.trim().replace(/\s/g, ""),
+    Skills:     obj.skills.trim().split(";"),
+    Notes:      obj.notes,
+    url:        '/' + acc.name + '/' + obj.title.trim().replace(/\s/g, ""),
+    publicUrl:  '/public/' + obj.title.trim().replace(/\s/g, ""),
     // tags:       [String],
     // template: String,
     creator:  acc._id,

@@ -1,5 +1,6 @@
 h1 Your Account
-div= "Hello " + mUser.name + ":"
+div Hello 
+  b= mUser.name + ":"
 div.AccF Change Your password 
   form(action= "/account/yourAccount/ChangePass" method="post")
     div Choose new password
@@ -25,12 +26,14 @@ div= "Your current Email is " + mUser.email
       each val, index in entries.length ? entries : ['empty array']
         tr
           td
-            a(href= val.url)=  val.title
+            div.entryL
+              a(href= val.url)=  val.title
           td
-            form(id= "form" + index, action= val.url, method="post")
-              input(type="hidden", name="_method", value= "delete") 
-              a(onclick="document.getElementById('" + "form" + index + "').submit()") 
-                u delete
+            div.deleteL
+              form(id= "form" + index, action= val.url, method="post")
+                input(type="hidden", name="_method", value= "delete") 
+                a(onclick="document.getElementById('" + "form" + index + "').submit()") 
+                  span Delete
             
             
                

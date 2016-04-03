@@ -29,6 +29,7 @@ var content_schema = new mongoose.Schema({
   Skills:     [String],
   Notes:      [String],
   url:        String,
+  publicUrl:  String,
   tags:       [String],
   template: String,
   creator:  String,

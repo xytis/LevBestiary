@@ -19,6 +19,7 @@ router.get("/newEntry",   methods.newEntry);
 router.get("/Browse",   methods.browseScreen);
 
 router.get("/Category/:category",   methods.displayCategory);
+router.get("/public/:content",   methods.publicRead);
 router.get("/:acc/:content",   methods.readA);
 router.get("/:content",   methods.read);
 
