@@ -30,7 +30,11 @@ module.exports.create = function(req,res){
 
 module.exports.read = function(req,res){
   var acc = Account.findOne({"sessionId": req.sessionID});
-  var con = Content.findOneByURL(req.path);
+  if(req.path == "/main"){
+    var con = JSON.parse(fs.readFileSync('public/main.json', 'utf8'));
+  }else{
+    var con = Content.findOneByURL(req.path);
+  }
 
   req.session.lastPage = req.originalUrl;
   Promise.all([acc, con])
