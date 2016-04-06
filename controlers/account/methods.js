@@ -4,6 +4,9 @@ var Promise = require("bluebird");
 var home_path = "../../"
 var Account = require(home_path + "models/account.js");
 
+var loggerC = require(home_path + 'logger.js');
+var logger = loggerC();
+
 module.exports.create = function(req,res){
   var body = req.body;
   Promise.all([Account.findOneByName(body.login), Account.findOne({"email": body.email})])
@@ -22,7 +25,7 @@ module.exports.create = function(req,res){
       }
     })
     .catch(function(err){
-      console.log(err);
+      logger.error("Error in Account/create: " + err);
     })
     .finally(function() {
       res.redirect(302, "/nav/main");
@@ -31,13 +34,13 @@ module.exports.create = function(req,res){
 
 
 module.exports.logout = function(req,res){
-  console.log("Logging out");
+  logger.info("logging out");
   Account.findOne({"sessionId": req.sessionID})
     .then(function(acc){
       return acc.update({"sessionId": 0})
     })
     .catch(function(err){
-      console.log(err);
+      logger.error("Error in Account/logout: " + err);
     })
     .finally(function() {
       res.redirect(302, req.session.lastPage);
@@ -57,7 +60,7 @@ module.exports.login = function(req,res){
       res.redirect(302, req.session.lastPage);
     })
     .catch(function(err){
-      console.log(err);
+      logger.error("Error in Account/login: " + err);
       res.redirect(302, req.session.lastPage + "?err=" + err)
     })
 }
@@ -74,7 +77,7 @@ module.exports.changePass = function(req,res){
       }
     })
     .catch(function(err){
-      console.log(err);
+      logger.error("Error in Account/changePass: " + err);
       res.redirect(302, req.session.lastPage);
     })
 }
@@ -92,7 +95,7 @@ module.exports.changeEmail = function(req,res){
       }
     })
     .catch(function(err){
-      console.log(err);
+      logger.error("Error in Account/changeEmail: " + err);
       res.redirect(302, req.session.lastPage);
     })
 }

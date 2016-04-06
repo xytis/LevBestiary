@@ -5,9 +5,11 @@ var Content = require(home_path + "models/content.js");
 var Account = require(home_path + "models/account.js");
 var fs = require('fs');
 
+var loggerC = require(home_path + 'logger.js');
+var logger = loggerC();
 
 module.exports.create = function(req,res){
-  console.log("creating new entry");
+  logger.info("Creating new enrty")
   Account.findOne({"sessionId": req.sessionID})
     .then(function(acc){
       var validated_data = validateEntry(req.body, acc);
@@ -22,7 +24,7 @@ module.exports.create = function(req,res){
       res.redirect(302, req.session.lastPage);
     })
     .catch(function(err){
-      console.log(err);
+      logger.error("Error in create: " + err)
       res.redirect(302, req.session.lastPage);
     })
 }
@@ -50,7 +52,7 @@ module.exports.read = function(req,res){
       }
     })
     .catch(function(err){
-      console.log(err)
+      logger.error("Error in read: " + err);
       res.status(500).end();
     })
 }
@@ -76,7 +78,7 @@ module.exports.publicRead = function(req,res){
       }
     })
     .catch(function(err){
-      console.log(err)
+      logger.error("Error in publicRead: " + err)
       res.status(500).end();
     })
 }
@@ -88,7 +90,6 @@ module.exports.readA = function(req,res){
     if(acc.name === req.params.acc){
       Content.findOneByURL(url).
         then(function(item){
-          console.log(url)
           if(item){
             res.render("index.jade",{loged_input: true, inpUser:{name: acc.name}, inContent: item});
           }else{
@@ -96,7 +97,7 @@ module.exports.readA = function(req,res){
           }
         })
     }else{
-      console.log("unauthorised")
+      logger.error("Unauthorised")
       res.redirect(302,"/nav/main")
     }
   })
@@ -113,7 +114,7 @@ module.exports.yourAccountPage = function(req,res){
       res.render("accountInfo.jade",{loged_input: true, iCont: "info", inpUser:{name: result[0].name, email: result[0].email}, iEntries: result[1]});
     })
     .catch(function(err){
-      console.log(err);
+      logger.error("Error in yourAccountPage: " + err)
       res.redirect(302, req.session.lastPage);
     })
 }
@@ -128,7 +129,7 @@ module.exports.createAccountPage = function(req,res){
       }
     })
     .catch(function(err){
-      console.log(err);
+      logger.error("Error in createAccountPage: " + err)
       res.redirect(302, req.session.lastPage);
     })
 }
@@ -185,7 +186,7 @@ function toglePublic(req,res){
       }
     })
     .catch(function(err){
-      console.log(err);
+      logger.error("Error in toglePublic: " + err)
     })
     .finally(function() {
       res.redirect(302, "/nav/yourAccount");
@@ -212,7 +213,7 @@ function deleteA(req,res){
       }
     })
     .catch(function(err){
-      console.log(err);
+      logger.error("Error in deleteA: " + err)
     })
     .finally(function() {
       res.redirect(302, "/nav/yourAccount");
@@ -231,7 +232,7 @@ module.exports.browseScreen = function(req,res){
       }
     })
     .catch(function(err){
-      console.log(err);
+      logger.error("Error in browseScreen: " + err)
       res.redirect(302, "/nav/main")
     })
 
@@ -264,7 +265,7 @@ module.exports.displayCategory = function(req,res){
 
     })
     .catch(function(err){
-      console.log(err);
+      logger.error("Error in displayCategory: " + err)
       res.redirect(302, "/nav/main")
     })
 

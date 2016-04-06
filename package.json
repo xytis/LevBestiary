@@ -18,6 +18,7 @@
     "mongoose": "*",
     "serve-favicon": "*",
     "body-parser": "*",
-    "bluebird": "*"
+    "bluebird": "*",
+    "winston": "*"
   }
 }

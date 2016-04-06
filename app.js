@@ -1,6 +1,6 @@
 var Promise = require("bluebird");
 
-var http = require("http"),
+var https = require("https"),
     express = require("express"),
     path = require("path"),
     session = require('express-session'),
@@ -8,12 +8,17 @@ var http = require("http"),
     MongoDBStore = require('connect-mongodb-session')(session),
     mongoose = Promise.promisifyAll(require("mongoose")),
     favicon = require('serve-favicon'),
-    bodyParser = require('body-parser');
+    bodyParser = require('body-parser'),
+    fs = require('fs'),
+    loggerC = require('./logger.js');
+
 
 
 //mount controlers
 var content = require("./controlers/content");
 var account = require("./controlers/account");
+
+var logger = loggerC();
 
 //Set Express
 var app = express();
@@ -23,14 +28,14 @@ app.set('view engine', 'jade');
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
 //SET MongoDB DATABASE
-var DBurl = 'mongodb://localhost:12345/LevDatabase';
+var DBurl = 'mongodb://localhost:27017/LevDatabase';
 
 //connect mongoose module to mongoDB
 mongoose.connect(DBurl);
 main_db = mongoose.connection;
 main_db.on('error', console.log.bind(console, 'connection error:'));
 main_db.once('open', function() {
-  console.log("mongoose connected");
+  logger.info("mongoose connected");
 });
 
 //session store in mongoDB
@@ -40,7 +45,7 @@ var store = new MongoDBStore({
             });
 
 store.on('error', function(error) {
-  console.log("error")
+  logger.error("Error in Express session: " + error)
   assert.ifError(error);
   assert.ok(false);
 });
@@ -61,6 +66,7 @@ app.use(session({secret: "LabaiLabaiIlgaIrPaslaptingaFraze",
 
 app.use(express.static(path.join(__dirname, "public")));
 
+
 //ROUTING
 app.use("/nav", content.router);
 app.use("/account", account.router);
@@ -70,12 +76,17 @@ app.get("/", function(req,res){
 });
 
 app.use(function(req,res){
-  console.log("error in path: " + req.path + ". With method: " + req.method);
+  logger.warn("error in path: " + req.path + ". With method: " + req.method);
   res.status(404).render("404.jade", {url:req.url});
 })
 
 
 //SERVER
-http.createServer(app).listen(app.get("port"), function(){
-  console.log("Server is running on port " + app.get("port"));
+var options = {
+  key: fs.readFileSync('keys/key.pem'),
+  cert: fs.readFileSync('keys/cert.pem')
+};
+
+https.createServer(options, app).listen(app.get("port"), function(){
+  logger.info("Server is running on port " + app.get("port"));
 })
