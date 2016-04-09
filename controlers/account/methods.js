@@ -61,7 +61,7 @@ module.exports.login = function(req,res){
     })
     .catch(function(err){
       logger.error("Error in Account/login: " + err);
-      res.redirect(302, req.session.lastPage + "?err=" + err)
+      res.redirect(302, req.session.lastPage)
     })
 }
 

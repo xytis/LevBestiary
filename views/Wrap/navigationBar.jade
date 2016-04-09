@@ -1,9 +1,15 @@
 - var logedin = loged_input
+- var Categories = ["Shroom Monsters", "Hive Mind", "Shapeless", "Deities"]
 
 mixin listref(url, name)
   li
     div
       a(href="/nav" + url)= name
+      
+mixin categorylink(name)
+  li
+    div
+      a(href="/nav/Category/" + name)= name
     
 div#LoginWrapper
   if logedin
@@ -26,23 +32,8 @@ hr
 
 div#navigationWrapper
   ul
-    mixin listref("/main", "Welcome")
-    li Shroom Monsters
-      ul
-        mixin listref("/theShroomCarrier", "The Shroom Carrier")
-        mixin listref("/shroomling", "Shroomling")
-    li Hive Mind 
-      ul   
-        mixin listref("/nahra", "Nah'ra")
-        mixin listref("/nahma", "Nah'ma")
-        mixin listref("/nahka", "Nah'ka")
-    li Shapeless
-      ul
-        mixin listref("/shapeless", "Shapeless")
-    li Deities
-      ul
-        mixin listref("/endlessWastness", "Endless Wastness")
-
+    each val in Categories
+      mixin categorylink(val)
   hr
   
   ul
