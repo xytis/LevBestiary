@@ -42,7 +42,7 @@ module.exports.logout = function(req,res){
     .catch(function(err){
       logger.error("Error in Account/logout: " + err);
     })
-    .finally(function() {
+    .finally(function(){
       res.redirect(302, req.session.lastPage);
     })
 };
@@ -61,7 +61,7 @@ module.exports.login = function(req,res){
     })
     .catch(function(err){
       logger.error("Error in Account/login: " + err);
-      res.redirect(302, req.session.lastPage)
+      res.redirect(302, req.session.lastPage);
     })
 }
 
