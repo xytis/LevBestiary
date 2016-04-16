@@ -48,7 +48,7 @@ module.exports.read = function(req,res){
           res.render("index.jade",{loged_input: false, inpUser:{name: "name"}, inContent: result[1]});
         }
       }else{
-        res.status(404).end();
+          res.status(404).render("404.jade", {url: "/nav" +req.url});
       }
     })
     .catch(function(err){
