@@ -74,7 +74,7 @@ module.exports.publicRead = function(req,res){
       if(result[1]){
         res.render("index.jade",{loged_input: loged, inpUser:{name: name}, inContent: result[1]});
       }else{
-        res.status(404).end();
+        res.status(404).render("404.jade", {url: "/nav" +req.url});
       }
     })
     .catch(function(err){
@@ -86,27 +86,35 @@ module.exports.publicRead = function(req,res){
 module.exports.readA = function(req,res){
   req.session.lastPage = req.originalUrl;
   var url = req.path;
-  Account.findOne({"sessionId": req.sessionID}).then(function(acc){
-    if(acc.name === req.params.acc){
-      Content.findOneByURL(url).
-        then(function(item){
-          if(item){
-            res.render("index.jade",{loged_input: true, inpUser:{name: acc.name}, inContent: item});
-          }else{
-            res.status(404).end();
-          }
-        })
-    }else{
-      logger.error("Unauthorised")
+  console.log(req.session.cookie.expires)
+
+  acc = Account.findOne({"sessionId": req.sessionID});
+  item = Content.findOneByURL(url);
+
+  Promise.all([acc, item])
+    .then(function(result){
+      if(!result[0]){
+        throw "Session Expired";
+      }
+      if(result[0].name === req.params.acc){
+        res.render("index.jade",{loged_input: true, inpUser:{name: result[0].name}, inContent: result[1]});
+      }else{
+        throw "Unauthorised";
+      }
+    })
+    .catch(function(err){
+      logger.error("Error in readA: " + err)
       res.redirect(302,"/nav/main")
-    }
-  })
+    })
 }
 
 
 module.exports.yourAccountPage = function(req,res){
   Account.findOne({"sessionId": req.sessionID})
     .then(function(acc){
+      if(!acc){
+        throw "Session Expired";
+      }
       var entries = getEntryList(acc.entries);
       return Promise.all([acc, entries]);
     })
