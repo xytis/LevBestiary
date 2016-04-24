@@ -4,7 +4,8 @@
   "description": "My express training app",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "PORT=3000 DB_IP=172.17.0.2 node app.js"
   },
   "author": "Kasparas",
   "license": "ISC",

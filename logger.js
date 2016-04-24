@@ -1,6 +1,6 @@
 var winston = require('winston');
 
-var logger = function(){
+var logger = function() {
   return new (winston.Logger)({
     transports: [
       new (winston.transports.File)({
@@ -15,6 +15,6 @@ var logger = function(){
       })
     ]
   });
-}
+};
 
 module.exports = logger;
