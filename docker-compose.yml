@@ -1,15 +1,33 @@
-db:
-  image: mongo
-  ports:
-    - 27017
-web:
-  image: darkcoleague/bestiary
-  command: npm start
-  volumes:
-    - .:/myapp
-  ports:
-    - 3000:3000
-  links:
-    - db
-  environment:
-    PORT: 3000
+version: '2'
+
+services:
+  db:
+    image: mongo
+    ports:
+      - 27017
+    volumes:
+      - ./../logs/data:/data/db
+  web:
+    image: darkcoleague/bestiary
+    command: npm start
+    volumes:
+      - ./../logs:/app/logs
+    environment:
+      PORT: 3000
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    labels:
+      - "traefik.backend=bestiary"
+      - "traefik.frontend.rule=Host:54.93.86.0"
+  traefik:
+    image: traefik
+    command: --web --docker
+    ports:
+      - "80:80"
+      - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./../logs/traefik.toml:/traefik.toml
+      - ./../logs/traefik.log:/traefik.log

@@ -1,0 +1,16 @@
+
+accessLogsFile = "traefik.log"
+defaultEntryPoints = ["http"]
+logLevel = "DEBUG"
+
+[web]
+address = ":8080"
+
+[entryPoints]
+  [entryPoints.http]
+  address = ":80"
+
+[docker]
+endpoint = "unix:///var/run/docker.sock"
+domain = "docker.localhost"
+watch = true

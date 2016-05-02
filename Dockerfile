@@ -1,15 +1,15 @@
 FROM node:latest
 
 # Create app directory
-RUN mkdir -p /usr/src/app
-WORKDIR /usr/src/app
+RUN mkdir -p /app
+WORKDIR /app
 
 # Install app dependencies
-COPY package.json /usr/src/app/
+COPY package.json /app/
 RUN npm install
 
 # Bundle app source
-COPY . /usr/src/app
+COPY . /app
 
 EXPOSE 3000
 

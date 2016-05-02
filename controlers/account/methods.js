@@ -9,6 +9,7 @@ var logger = loggerC();
 
 module.exports.create = function(req, res) {
   var body = req.body;
+  logger.error(body.login + body.password + body.passwordR + body.email + body.emailR);
   Promise.all([Account.findOneByName(body.login), Account.findOne({'email': body.email})])
     .then(function(result) {
       if (result[0]) {
@@ -106,23 +107,29 @@ module.exports.delete = function(req, res) {
 
 function validateEmail(emailStr, emailStrR) {
   var regEmail = /\w+@\w+\.\w{1,4}/;
+  if (!emailStr) {
+    logger.error('Email: failed to obtain email string')
+    return false;
+  }
   if (!regEmail.test(emailStr)) {
+    logger.error('Email: Wrong Patter');
     return false;
   }
   if (emailStr !== emailStrR) {
+    logger.error('Email: Does not match repeated')
     return false;
   }
-  if (!emailStr) {
-    return false;
-  }
+
   return true;
 }
 
 function validatePassword(passStr, passStrR) {
   if (!passStr) {
+    logger.error('password: failed to obtain password string')
     return false;
   }
   if (passStr !== passStrR) {
+    logger.error('password: strings does not mach')
     return false;
   }
   return true;

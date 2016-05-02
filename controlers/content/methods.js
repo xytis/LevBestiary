@@ -43,8 +43,10 @@ module.exports.read = function(req, res) {
     .then(function(result) {
       if (result[1]) {
         if (result[0]) {
+logger.info("logged")
           res.render('index.jade',{logedInput: true, inpUser: {name: result[0].name}, inContent: result[1]});
         }else {
+logger.info("not logged")
           res.render('index.jade',{logedInput: false, inpUser: {name: 'name'}, inContent: result[1]});
         }
       }else {
@@ -232,8 +234,11 @@ module.exports.browseScreen = function(req, res) {
   Account.findOne({'sessionId': req.sessionID})
     .then(function(acc) {
       if (acc) {
-        res.render('browse.jade',{logedInput: true, inpUser: {name: acc.name}, inCategories: categories});
+logger.info("logged")
+       res.render('browse.jade',{logedInput: true, inpUser: {name: acc.name}, inCategories: categories});
       }else {
+
+logger.info("not logged")
         res.render('browse.jade',{logedInput: false, inpUser: undefined, inCategories: categories});
       }
     })
