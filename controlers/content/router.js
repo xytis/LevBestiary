@@ -17,6 +17,7 @@ router.get('/yourAccount',   methods.yourAccountPage);
 router.get('/createAccount',   methods.createAccountPage);
 router.get('/newEntry',   methods.newEntry);
 router.get('/Browse',   methods.browseScreen);
+router.get('/compare',   methods.compareScreen);
 
 router.get('/Category/:category',   methods.displayCategory);
 router.get('/public/:content',   methods.publicRead);

@@ -1,0 +1,19 @@
+- var mUser = inpUser
+
+html
+  head
+    link(rel="stylesheet", type="text/css", href="/styles.css")
+  body
+    div#wrapper
+      div#header
+        include ./Wrap/header.jade
+      div#container
+        div#navigation
+          include ./Wrap/hNav.jade
+        div#leftcolumn
+          include ./Wrap/navigationBar.jade
+        div#rightcolumn
+          include ./includes/compare.jade
+      div#footer
+        include ./Wrap/footer.jade
+    
