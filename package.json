@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "PORT=3000 DB_IP=172.18.0.3 node app.js"
+    "start": "bash create_logs.sh && PORT=3000 DB_IP=172.18.0.3 node app.js"
   },
   "author": "Kasparas",
   "license": "ISC",

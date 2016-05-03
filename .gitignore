@@ -1,3 +1,7 @@
+.*
+!.gitignore
+!.dockerignore
+
 log/
 logs/
 node_modules/

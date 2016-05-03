@@ -234,11 +234,8 @@ module.exports.browseScreen = function(req, res) {
   Account.findOne({'sessionId': req.sessionID})
     .then(function(acc) {
       if (acc) {
-logger.info("logged")
        res.render('browse.jade',{logedInput: true, inpUser: {name: acc.name}, inCategories: categories});
       }else {
-
-logger.info("not logged")
         res.render('browse.jade',{logedInput: false, inpUser: undefined, inCategories: categories});
       }
     })
@@ -281,6 +278,24 @@ module.exports.displayCategory = function(req, res) {
     });
 
 };
+
+
+
+module.exports.compareScreen = function(req, res) {
+  req.session.lastPage = req.originalUrl;
+  Account.findOne({'sessionId': req.sessionID})
+    .then(function(acc) {
+      if (acc) {
+       res.render('compare.jade',{logedInput: true, inpUser: {name: acc.name}});
+      }else {
+        res.render('compare.jade',{logedInput: false, inpUser: undefined});
+      }
+    })
+    .catch(function(err) {
+      logger.error('Error in compareScreen: ' + err);
+      res.redirect(302, '/nav/main');
+    });
+}
 
 //PRIVATE FUNCTIONS
 
