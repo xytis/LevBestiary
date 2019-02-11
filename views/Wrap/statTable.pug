@@ -1,0 +1,28 @@
+mixin tableEntry(stat, val)
+  td.stat= stat + ": "
+  td.val= val
+
+
+table#AttributeTable
+  thead
+  tbody
+    tr
+      +tableEntry("ST", content.AttributeTable.ST)
+      +tableEntry("HP", content.AttributeTable.HP)
+      +tableEntry("Speed", content.AttributeTable.Speed)
+    tr
+      +tableEntry("DX", content.AttributeTable.DX)
+      +tableEntry("Will", content.AttributeTable.Will)
+      +tableEntry("Move", content.AttributeTable.Move)
+    tr
+      +tableEntry("IQ", content.AttributeTable.IQ)
+      +tableEntry("Per", content.AttributeTable.Per)
+      +tableEntry("SM", content.AttributeTable.SM)
+    tr
+      +tableEntry("HT", content.AttributeTable.HT)
+      +tableEntry("FP", content.AttributeTable.FP)
+      +tableEntry("Pr", content.AttributeTable.Pr)
+    tr
+      +tableEntry("Dodge", content.AttributeTable.Dodge)
+      +tableEntry("Parry", content.AttributeTable.Parry)
+      +tableEntry("DR", content.AttributeTable.DR)

@@ -22,7 +22,7 @@ var logger = loggerC();
 var app = express();
 app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+app.set('view engine', 'pug');
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
 //SET MongoDB DATABASE
@@ -75,7 +75,7 @@ app.get('/', function(req, res) {
 
 app.use(function(req, res) {
   logger.warn('error in path: ' + req.path + '. With method: ' + req.method);
-  res.status(404).render('404.jade', {url: req.url});
+  res.status(404).render('404.pug', {url: req.url});
 });
 
 //SERVER

@@ -11,11 +11,11 @@
   "license": "ISC",
   "dependencies": {
     "express": "*",
-    "jade": "*",
+    "pug": "*",
     "mongodb": "*",
     "express-session": "*",
     "cookie-parser": "*",
-    "connect-mongodb-session" : "*",
+    "connect-mongodb-session": "*",
     "mongoose": "*",
     "serve-favicon": "*",
     "body-parser": "*",

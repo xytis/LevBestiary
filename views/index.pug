@@ -8,18 +8,18 @@ html
   body
     div#wrapper
       div#header
-        include ./Wrap/header.jade
+        include ./Wrap/header
       div#container
         div#navigation
-          include ./Wrap/hNav.jade
+          include ./Wrap/hNav
         div#leftcolumn
-          include ./Wrap/navigationBar.jade
+          include ./Wrap/navigationBar
         div#rightcolumn
           case template
             when "main"
-              include ./includes/mainContent.jade
+              include ./includes/mainContent
             default
-              include ./includes/content.jade
+              include ./includes/content
       div#footer
-        include ./Wrap/footer.jade
+        include ./Wrap/footer
     

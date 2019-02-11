@@ -8,20 +8,20 @@ html
 body
   div#wrapper
     div#header
-      include ./Wrap/header.jade
+      include ./Wrap/header
     div#container
       div#navigation
-        include ./Wrap/hNav.jade
+        include ./Wrap/hNav
       div#leftcolumn
-        include ./Wrap/navigationBar.jade
+        include ./Wrap/navigationBar
       div#rightcolumn
         case content
           when "info"
-            include ./includes/accountInfoContent.jade
+            include ./includes/accountInfoContent
           when "create"
-            include ./includes/createAccount.jade
+            include ./includes/createAccount
           when "newEntry"
-            include ./includes/newEntry.jade
+            include ./includes/newEntry
     div#footer
-      include ./Wrap/footer.jade
+      include ./Wrap/footer
     

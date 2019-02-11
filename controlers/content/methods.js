@@ -43,14 +43,12 @@ module.exports.read = function(req, res) {
     .then(function(result) {
       if (result[1]) {
         if (result[0]) {
-logger.info("logged")
-          res.render('index.jade',{logedInput: true, inpUser: {name: result[0].name}, inContent: result[1]});
+          res.render('index.pug',{logedInput: true, inpUser: {name: result[0].name}, inContent: result[1]});
         }else {
-logger.info("not logged")
-          res.render('index.jade',{logedInput: false, inpUser: {name: 'name'}, inContent: result[1]});
+          res.render('index.pug',{logedInput: false, inpUser: {name: 'name'}, inContent: result[1]});
         }
       }else {
-        res.status(404).render('404.jade', {url: '/nav' + req.url});
+        res.status(404).render('404.pug', {url: '/nav' + req.url});
       }
     })
     .catch(function(err) {
@@ -75,9 +73,9 @@ module.exports.publicRead = function(req, res) {
         var name = undefined;
       }
       if (result[1]) {
-        res.render('index.jade',{logedInput: loged, inpUser: {name: name}, inContent: result[1]});
+        res.render('index.pug',{logedInput: loged, inpUser: {name: name}, inContent: result[1]});
       }else {
-        res.status(404).render('404.jade', {url: '/nav' + req.url});
+        res.status(404).render('404.pug', {url: '/nav' + req.url});
       }
     })
     .catch(function(err) {
@@ -100,7 +98,7 @@ module.exports.readA = function(req, res) {
         throw 'Session Expired';
       }
       if (result[0].name === req.params.acc) {
-        res.render('index.jade',{logedInput: true, inpUser: {name: result[0].name}, inContent: result[1]});
+        res.render('index.pug',{logedInput: true, inpUser: {name: result[0].name}, inContent: result[1]});
       }else {
         throw 'Unauthorised';
       }
@@ -121,7 +119,7 @@ module.exports.yourAccountPage = function(req, res) {
       return Promise.all([acc, entries]);
     })
     .then(function(result) {
-      res.render('accountInfo.jade',{logedInput: true, iCont: 'info', inpUser: {name: result[0].name, email: result[0].email}, iEntries: result[1]});
+      res.render('accountInfo.pug',{logedInput: true, iCont: 'info', inpUser: {name: result[0].name, email: result[0].email}, iEntries: result[1]});
     })
     .catch(function(err) {
       logger.error('Error in yourAccountPage: ' + err);
@@ -133,7 +131,7 @@ module.exports.createAccountPage = function(req, res) {
   Account.findOne({'sessionId': req.sessionID})
     .then(function(acc) {
       if (!acc) {
-        return res.render('accountInfo.jade',{logedInput: false, iCont: 'create'});
+        return res.render('accountInfo.pug',{logedInput: false, iCont: 'create'});
       }else {
         throw 'Already logged in.';
       }
@@ -150,7 +148,7 @@ module.exports.newEntry = function(req, res) {
   Account.findOne({'sessionId': req.sessionID})
     .then(function(acc) {
       if (acc) {
-        res.render('accountInfo.jade',{logedInput: true, iCont: 'newEntry', inpUser: {name: acc.name}, inCategories: categories});
+        res.render('accountInfo.pug',{logedInput: true, iCont: 'newEntry', inpUser: {name: acc.name}, inCategories: categories});
       }else {
         res.redirect(302,'/nav/main');
       }
@@ -234,9 +232,9 @@ module.exports.browseScreen = function(req, res) {
   Account.findOne({'sessionId': req.sessionID})
     .then(function(acc) {
       if (acc) {
-       res.render('browse.jade',{logedInput: true, inpUser: {name: acc.name}, inCategories: categories});
+        res.render('browse.pug',{logedInput: true, inpUser: {name: acc.name}, inCategories: categories});
       }else {
-        res.render('browse.jade',{logedInput: false, inpUser: undefined, inCategories: categories});
+        res.render('browse.pug',{logedInput: false, inpUser: undefined, inCategories: categories});
       }
     })
     .catch(function(err) {
@@ -269,7 +267,7 @@ module.exports.displayCategory = function(req, res) {
           entries.push({title: result[1][ii].title, url: result[1][ii].url});
         }
       }
-      res.render('category.jade',{logedInput: loged, inpUser: {name: name}, inEntries: entries, inCategory: category});
+      res.render('category.pug',{logedInput: loged, inpUser: {name: name}, inEntries: entries, inCategory: category});
 
     })
     .catch(function(err) {

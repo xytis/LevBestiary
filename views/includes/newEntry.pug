@@ -17,7 +17,7 @@ div Here You can add new entry to the catalog
       div.comment The category the monster belongs to
       select(name="class")
         each val in inCategories
-          mixin dropDownEntry(val)
+          +dropDownEntry(val)
     div.inputWrap
       div Description:
       input.col(type="text", name="description")
@@ -25,25 +25,25 @@ div Here You can add new entry to the catalog
       table#AttributeTable
         tbody
           tr
-            mixin charEntry("ST")
-            mixin charEntry("HP")
-            mixin charEntry("Speed")
+            +charEntry("ST")
+            +charEntry("HP")
+            +charEntry("Speed")
           tr
-            mixin charEntry("DX")
-            mixin charEntry("Will")
-            mixin charEntry("Move")
+            +charEntry("DX")
+            +charEntry("Will")
+            +charEntry("Move")
           tr
-            mixin charEntry("IQ")
-            mixin charEntry("Per")
-            mixin charEntry("SM")
+            +charEntry("IQ")
+            +charEntry("Per")
+            +charEntry("SM")
           tr
-            mixin charEntry("HT")
-            mixin charEntry("FP")
-            mixin charEntry("Pr")
+            +charEntry("HT")
+            +charEntry("FP")
+            +charEntry("Pr")
           tr
-            mixin charEntry("Dodge")
-            mixin charEntry("Parry")
-            mixin charEntry("Dr")
+            +charEntry("Dodge")
+            +charEntry("Parry")
+            +charEntry("Dr")
     div.inputWrap
       div Attacks
       input.col(type="text", name="attacks")

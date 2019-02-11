@@ -9,6 +9,6 @@ h1= inCategory
 div#categoriesWrapper
   ul
     each val in entries
-      mixin entryL(val.title, val.url)
+      +entryL(val.title, val.url)
 
     

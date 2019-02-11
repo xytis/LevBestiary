@@ -33,9 +33,9 @@ hr
 div#navigationWrapper
   ul
     each val in Categories
-      mixin categorylink(val)
+      +categorylink(val)
   hr
   
   ul
-    mixin listref("/Browse", "Browse Categories")
+    +listref("/Browse", "Browse Categories")
         
