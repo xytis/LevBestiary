@@ -1,0 +1,3 @@
+Create fixture data/static beast data from existing site
+Refactor content model into specific type 'sheet', with subtypes 'attributes', 'items', 'advantages/features'. 
+Refactor launch sequence to abort gracefuly on missing DB

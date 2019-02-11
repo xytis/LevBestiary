@@ -1,20 +1,15 @@
-var winston = require('winston');
+var winston = require('winston')
 
 var logger = function () {
-  return winston.createLogger({
+  let logger = winston.createLogger({
     transports: [
-      new (winston.transports.File)({
-        name: 'info-file',
-        filename: 'logs/general.log',
-        level: 'info'
-      }),
-      new (winston.transports.File)({
-        name: 'error-file',
-        filename: 'logs/errors.log',
-        level: 'error'
+      new winston.transports.Console({
+        format: winston.format.simple()
       })
     ]
   })
+
+  return logger
 }
 
 module.exports = logger

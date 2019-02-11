@@ -1,0 +1,1 @@
+x 2019-02-11 Remove traefik and clean up build process
