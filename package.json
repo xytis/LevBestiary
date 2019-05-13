@@ -22,5 +22,8 @@
     "serve-favicon": "*",
     "standard": "^12.0.1",
     "winston": "*"
+  },
+  "devDependencies": {
+    "node-mongoose-fixtures": "^0.3.0"
   }
 }
